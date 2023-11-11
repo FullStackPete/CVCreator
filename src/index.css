@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.menuIcon {
+  transition: transform 0.3s ease;
+}
+
+.menuIcon.open {
+  transform: rotate(180deg);
+}
+
+.menu{
+  height:5rem;
+  overflow: hidden;
+  transform:translateY(0);
+  transition: height 1s ease;
+  
+}
+.show-menu{
+height:20rem;
+}
