@@ -27,3 +27,8 @@ height:20rem;
 .h-big{
   height: 720px;
 }
+.max-width-prose {
+  max-width: 360px; /* Dowolna wartość, którą chcesz ustawić jako maksymalną szerokość */
+  width: 100%;
+  overflow-wrap: break-word; /* Zapobiega wydłużaniu się słów po przekroczeniu maksymalnej szerokości */
+}

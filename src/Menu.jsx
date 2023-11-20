@@ -16,7 +16,7 @@ function Menu() {
   const [output, setOutput] = useState({
     name: "",
     lastname: "",
-    birthdate: "",
+    desiredpos: "",
     about: "",
     uniname: "",
     major: "",
@@ -35,7 +35,6 @@ function Menu() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
 
-  
   const handleMenuClick = () => {
     setMenuIsOpen(!menuIsOpen);
   };
@@ -76,7 +75,7 @@ function Menu() {
           icon="Work"
         ></Icon>
       </div>
-      
+
       {activeForm === "BasicForm" && (
         <BasicForm onInputChange={handleInputChange} />
       )}
@@ -86,15 +85,33 @@ function Menu() {
       {activeForm === "WorkForm" && (
         <WorkForm onInputChange={handleInputChange} />
       )}
-      <div className="CV flex flex-row">
-        <div className="left-bar bg-gray-800 flex-col h-big"><h1>{output.name} {output.lastname}</h1></div>
-        <div className="right-bar flex-col">
-          <div className="bg-yellow-400 mt-6 w-96 h-32"></div>
+      <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
+        <div className="left-bar bg-gray-800 flex-col h-big w-32">
+          <p className="my-6 text-center tracking-widest border-b-2">
+            EDUCATION
+          </p>
         </div>
-      
-        
-        <h1>{output.birthdate}</h1>
-        <h1>{output.about}</h1>
+        <div className="right-bar flex-col">
+          <div className="h-10"></div>
+          <div className="bg-yellow-400 w-96 h-32 text-black tracking-widest leading-3 overflow-y-auto max-h-32">
+            <div className="bg-yellow-400 h-2"></div>
+            <p className="ml-6 mt-4 text-4xl">
+              <span className="font-bold">{output.name}</span> {output.lastname}
+            </p>
+            <br />
+            <p className="ml-6 text-2xl">{output.desiredpos}</p>
+          </div>
+          <div className="text-black ml-6 text-base tracking-widest font-semibold mt-4 border-black border-b-2">
+            ABOUT ME
+          </div>
+          <div className="text-black ml-6 text-sm overflow-y-auto max-h-48 max-width-prose">
+            {output.about}
+          </div>
+          <br />
+          <div className="text-black ml-6 text-base tracking-widest font-semibold mt-4 border-black border-b-2">
+            WORK EXPERIENCE
+          </div>
+        </div>
         <h1>{output.uniname}</h1>
         <h1>{output.major}</h1>
         <h1>{output.studyYears}</h1>

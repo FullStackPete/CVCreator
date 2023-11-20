@@ -43,8 +43,8 @@ export function BasicForm({ onInputChange }) {
       />
       <Input
         onInputChange={onInputChange}
-        name="birthdate"
-        placeholder="Date of birth"
+        name="desiredpos"
+        placeholder="What position are you applying for?"
       />
       <Input
         onInputChange={onInputChange}
