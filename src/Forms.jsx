@@ -1,10 +1,26 @@
 import { useState } from "react";
 
+function AddButton({ onClickHandler }) {
+  return (
+    <div className="flex justify-end">
+      <button
+        onClick={onClickHandler}
+        className="bg-slate-300 rounded-md text-gray-800 m-4 hover:text-white transition"
+      >
+        <span className="material-symbols-outlined text-4xl">add_circle</span>
+      </button>
+    </div>
+  );
+}
+
+
+
 function Input({
   className = "m-5 p-2 rounded",
   placeholder,
   name,
   onInputChange,
+  isTextArea, // Dodaj nową właściwość do oznaczania, czy to ma być textarea
 }) {
   const [output, setOutput] = useState("");
   const handleChange = (e) => {
@@ -12,6 +28,21 @@ function Input({
     setOutput(value);
     onInputChange && onInputChange(value, name);
   };
+
+  if (isTextArea) {
+    return (
+      <>
+        <textarea
+          onChange={handleChange}
+          name={name}
+          placeholder={placeholder}
+          className={className}
+          value={output}
+        />
+      </>
+    );
+  }
+
   return (
     <>
       <input
@@ -27,7 +58,7 @@ function Input({
 
 function Form({ children }) {
   return (
-    <div className="flex flex-col forms-container bg-slate-300 w-4/12 rounded m-4 max-h-80">
+    <div className="flex flex-col forms-container bg-slate-300 rounded m-4 h-fit">
       <div className="flex basic-form flex-col">{children}</div>
     </div>
   );
@@ -50,12 +81,13 @@ export function BasicForm({ onInputChange }) {
         onInputChange={onInputChange}
         name="about"
         placeholder="About me"
+        isTextArea // Ustaw flagę isTextArea dla textarea
       />
     </Form>
   );
 }
 
-export function SchoolForm({ onInputChange }) {
+export function SchoolForm({ onInputChange, onClickHandler }) {
   return (
     <Form>
       <Input
@@ -73,11 +105,12 @@ export function SchoolForm({ onInputChange }) {
         name="studyYears"
         placeholder="Year 2017-2020"
       />
+      <AddButton onClickHandler={onClickHandler} />
     </Form>
   );
 }
 
-export function WorkForm({ onInputChange }) {
+export function WorkForm({ onInputChange, onClickHandler }) {
   return (
     <Form>
       <Input
@@ -95,6 +128,7 @@ export function WorkForm({ onInputChange }) {
         name="workYears"
         placeholder="2020-current"
       />
+      <AddButton onClickHandler={onClickHandler} />
     </Form>
   );
 }

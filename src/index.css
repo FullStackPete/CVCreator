@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.CV{
+  max-height:720px;
+  overflow-y: auto;
+}
+
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
@@ -26,9 +31,10 @@ height:20rem;
 }
 .h-big{
   height: 720px;
+  max-height: 720px;
 }
 .max-width-prose {
-  max-width: 360px; /* Dowolna wartość, którą chcesz ustawić jako maksymalną szerokość */
+  max-width: 360px; 
   width: 100%;
-  overflow-wrap: break-word; /* Zapobiega wydłużaniu się słów po przekroczeniu maksymalnej szerokości */
+  overflow-wrap: break-word;
 }
