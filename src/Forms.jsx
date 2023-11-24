@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Input} from "./SComponents";
 
 function AddButton({ onClickHandler }) {
   return (
@@ -15,46 +16,6 @@ function AddButton({ onClickHandler }) {
 
 
 
-function Input({
-  className = "m-5 p-2 rounded",
-  placeholder,
-  name,
-  onInputChange,
-  isTextArea, // Dodaj nową właściwość do oznaczania, czy to ma być textarea
-}) {
-  const [output, setOutput] = useState("");
-  const handleChange = (e) => {
-    const value = e.target.value;
-    setOutput(value);
-    onInputChange && onInputChange(value, name);
-  };
-
-  if (isTextArea) {
-    return (
-      <>
-        <textarea
-          onChange={handleChange}
-          name={name}
-          placeholder={placeholder}
-          className={className}
-          value={output}
-        />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <input
-        onChange={handleChange}
-        name={name}
-        placeholder={placeholder}
-        className={className}
-        value={output}
-      />
-    </>
-  );
-}
 
 function Form({ children }) {
   return (

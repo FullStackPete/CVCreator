@@ -2,8 +2,8 @@ import { BasicForm, SchoolForm, WorkForm } from "./Forms";
 import { FormCol, Icon, ExpContainer } from "./SComponents";
 import { useState } from "react";
 
-const SchoolExp = [];
-const WorkExp = [];
+let SchoolExp = [];
+let WorkExp = [];
 let SchoolExpID = 0;
 let WorkExpID = 0;
 
@@ -23,17 +23,39 @@ function Menu() {
   });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
+  
+  const handleExpEdit = (id) => {
+    if (activeForm == "SchoolForm") {
+      
+      SchoolExp = SchoolExp.filter((exp) => exp.id !== id);
+      setBtnState(btnState+1);
+    } else if (activeForm == "WorkForm") {
+      console.log("hi");
+    }
+  };
 
+  const handleExpDelete = (id) => {
+    if (activeForm == "SchoolForm") {
+      SchoolExp = SchoolExp.filter((exp) => exp.id !== id);
+      setBtnState(btnState + 1);
+    } else if (activeForm == "WorkForm") {
+      WorkExp = WorkExp.filter((exp) => exp.id !== id);
+      setBtnState(btnState + 1);
+    }
+  };
   const handleFormAddClick = () => {
     if (activeForm == "SchoolForm") {
       SchoolExpID++;
+      console.log(SchoolExpID);
       SchoolExp.push({
         id: SchoolExpID,
         uniname: output.uniname,
         major: output.major,
         studyYears: output.studyYears,
       });
-      setBtnState(SchoolExpID);
+
+      setBtnState((prevBtnState) => prevBtnState + 1);
+      console.log(SchoolExp);
     } else if (activeForm == "WorkForm") {
       WorkExpID++;
       WorkExp.push({
@@ -42,7 +64,7 @@ function Menu() {
         position: output.position,
         workYears: output.workYears,
       });
-      setBtnState(WorkExpID);
+      setBtnState((prevBtnState) => prevBtnState + 1);
     }
   };
 
@@ -60,7 +82,7 @@ function Menu() {
   const handleFormToggle = (form) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
-  const WorkExpTogether = WorkExp.map((exp) => (
+  const WorkExpViews = WorkExp.map((exp) => (
     <div
       key={exp.id}
       className="flex flex-row text-black ml-6 text-xs overflow-y-auto max-h-48 max-width-prose"
@@ -69,6 +91,32 @@ function Menu() {
       <div className="flex flex-col ml-2">
         <div className="font-bold">{exp.company}</div>
         <div>{exp.position}</div>
+      </div>
+    </div>
+  ));
+  const SchoolExpViews = SchoolExp.map((exp) => (
+    <div key={exp.id} className="flex flex-row text-white m-2 text-xs">
+      <div className="font-bold">{exp.studyYears}</div>
+      <div className="flex-col ml-2">
+        <div className="font-bold">{exp.uniname}</div>
+        <div>{exp.major}</div>
+      </div>
+    </div>
+  ));
+
+  const SchoolExpEditable = SchoolExp.map((exp) => (
+    <div
+      key={exp.id}
+      className="flex flex-row text-black m-5 text-base max-h-48"
+    >
+      <div className="font-bold">{exp.studyYears}</div>
+      <div className="flex flex-col ml-2">
+        <div className="font-bold">{exp.uniname}</div>
+        <div>{exp.major}</div>
+      </div>
+      <div className="flex items-end">
+        <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
+        <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
       </div>
     </div>
   ));
@@ -82,9 +130,16 @@ function Menu() {
         <div className="font-bold">{exp.company}</div>
         <div>{exp.position}</div>
       </div>
-      <Icon icon="delete"/>
+      <div className="flex items-end">
+        <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
+        <Icon
+          clickHandler={() => console.log("Edit button not implemented yet")}
+          icon="edit"
+        />
+      </div>
     </div>
   ));
+
   return (
     <>
       <div
@@ -104,7 +159,7 @@ function Menu() {
           </span>
         </button>
 
-        <Icon        
+        <Icon
           clickHandler={() => handleFormToggle("BasicForm")}
           icon="Description"
         ></Icon>
@@ -129,6 +184,7 @@ function Menu() {
             onInputChange={handleInputChange}
             onClickHandler={handleFormAddClick}
           />
+          <ExpContainer>{SchoolExpEditable}</ExpContainer>
         </FormCol>
       )}
       {activeForm === "WorkForm" && (
@@ -145,6 +201,7 @@ function Menu() {
           <p className="my-6 text-center tracking-widest border-b-2">
             EDUCATION
           </p>
+          {SchoolExpViews}
         </div>
         <div className="right-bar flex-col ">
           <div className="h-10"></div>
@@ -159,21 +216,15 @@ function Menu() {
           <div className="text-black ml-6 text-sm tracking-widest font-semibold mt-4 border-black border-b-2">
             ABOUT ME
           </div>
-          <div className="text-black ml-6 text-xs overflow-y-auto max-h-48 max-width-prose">
+          <div className="text-black ml-6 text-xs overflow-y-auto max-width-prose">
             {output.about}
           </div>
           <br />
-          <div className="text-black ml-6 text-sm tracking-widest font-semibold mt-4 border-black border-b-2">
+          <div className="text-black ml-6 text-sm tracking-widest font-semibold border-black border-b-2">
             WORK EXPERIENCE
           </div>
-          {WorkExpTogether}
+          {WorkExpViews}
         </div>
-        <h1>{output.uniname}</h1>
-        <h1>{output.major}</h1>
-        <h1>{output.studyYears}</h1>
-        {/* <h1>{output.company}</h1>
-        <h1>{output.position}</h1>
-        <h1>{output.workYears}</h1> */}
       </div>
     </>
   );

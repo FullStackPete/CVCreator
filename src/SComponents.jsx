@@ -1,8 +1,13 @@
+import { useState } from "react";
+
+
+
 function FormCol({ children }) {
   return <div className="flex flex-col w-4/12">{children}</div>;
 }
 
 function Icon({ icon, clickHandler }) {
+  
   let styledIcon;
   if (icon == "Description" || icon == "School" || icon=="Work") {
     styledIcon =
@@ -20,7 +25,48 @@ function Icon({ icon, clickHandler }) {
 }
 
 function ExpContainer({ children }) {
-  return <div className="bg-slate-300 w-fit rounded m-4 h-fit">{children}</div>;
+  return <div className="bg-slate-300 max-w-fit break-words whitespace-normal rounded m-4 h-fit">{children}</div>;
 }
 
-export { FormCol, Icon, ExpContainer };
+function Input({
+  className = "m-5 p-2 rounded",
+  placeholder,
+  name,
+  onInputChange,
+  isTextArea, // Dodaj nową właściwość do oznaczania, czy to ma być textarea
+}) {
+  const [output, setOutput] = useState("");
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setOutput(value);
+    onInputChange && onInputChange(value, name);
+  };
+
+  if (isTextArea) {
+    return (
+      <>
+        <textarea
+          onChange={handleChange}
+          name={name}
+          placeholder={placeholder}
+          className={className}
+          value={output}
+        />
+      </>
+    );
+  }
+
+  return (
+    <>
+      <input
+        onChange={handleChange}
+        name={name}
+        placeholder={placeholder}
+        className={className}
+        value={output}
+      />
+    </>
+  );
+}
+
+export { FormCol, Icon, ExpContainer, Input };
