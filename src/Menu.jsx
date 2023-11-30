@@ -2,13 +2,15 @@ import { BasicForm, SchoolForm, WorkForm } from "./Forms";
 import { FormCol, Icon, ExpContainer } from "./SComponents";
 import { useState } from "react";
 
-let SchoolExp = [];
-let WorkExp = [];
 let SchoolExpID = 0;
 let WorkExpID = 0;
 
 function Menu() {
+  const [isEditing, setIsEditing] = useState(false);
+  const [schoolExp, setSchoolExp] = useState([]);
+  const [workExp, setWorkExp] = useState([]);
   const [btnState, setBtnState] = useState(null);
+
   const [output, setOutput] = useState({
     name: "",
     lastname: "",
@@ -23,47 +25,73 @@ function Menu() {
   });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
-  
+
   const handleExpEdit = (id) => {
-    if (activeForm == "SchoolForm") {
-      
-      SchoolExp = SchoolExp.filter((exp) => exp.id !== id);
-      setBtnState(btnState+1);
-    } else if (activeForm == "WorkForm") {
-      console.log("hi");
+    if (activeForm === "SchoolForm") {
+      setIsEditing(true);
+      const editedSchoolExp = schoolExp.find((exp) => exp.id === id);
+
+      setOutput((prevOutput) => ({
+        ...prevOutput,
+        studyYears: editedSchoolExp.studyYears,
+        uniname: editedSchoolExp.uniname,
+        major: editedSchoolExp.major,
+      }));
+      const updatedSchoolExp = schoolExp.filter((exp) => exp.id !== id);
+      setSchoolExp(updatedSchoolExp);
+      setBtnState((prevBtnState) => prevBtnState + 1);
+    } else if (activeForm === "WorkForm") {
+      setIsEditing(true); // only
+      const editedWorkExp = workExp.find((exp) => exp.id === id);
+
+      setOutput((prevOutput) => ({
+        ...prevOutput,
+        workYears: editedWorkExp.workYears,
+        company: editedWorkExp.company,
+        position: editedWorkExp.position,
+      }));
+
+      const updatedWorkExp = workExp.filter((exp) => exp.id !== id);
+      setWorkExp(updatedWorkExp);
+      setBtnState((prevBtnState) => prevBtnState + 1);
     }
   };
 
   const handleExpDelete = (id) => {
     if (activeForm == "SchoolForm") {
-      SchoolExp = SchoolExp.filter((exp) => exp.id !== id);
-      setBtnState(btnState + 1);
+      const updatedSchoolExp = schoolExp.filter((exp) => exp.id !== id);
+      setSchoolExp(updatedSchoolExp);
+      setBtnState((prevBtnState) => prevBtnState + 1);
     } else if (activeForm == "WorkForm") {
-      WorkExp = WorkExp.filter((exp) => exp.id !== id);
+      const updatedWorkExp = workExp.filter((exp) => exp.id !== id);
+      setWorkExp(updatedWorkExp);
       setBtnState(btnState + 1);
     }
   };
   const handleFormAddClick = () => {
     if (activeForm == "SchoolForm") {
       SchoolExpID++;
-      console.log(SchoolExpID);
-      SchoolExp.push({
-        id: SchoolExpID,
-        uniname: output.uniname,
-        major: output.major,
-        studyYears: output.studyYears,
-      });
-
+      setSchoolExp((prevSchoolExp) => [
+        ...prevSchoolExp,
+        {
+          id: SchoolExpID,
+          uniname: output.uniname,
+          major: output.major,
+          studyYears: output.studyYears,
+        },
+      ]);
       setBtnState((prevBtnState) => prevBtnState + 1);
-      console.log(SchoolExp);
     } else if (activeForm == "WorkForm") {
       WorkExpID++;
-      WorkExp.push({
-        id: WorkExpID,
-        company: output.company,
-        position: output.position,
-        workYears: output.workYears,
-      });
+      setWorkExp((prevWorkExp) => [
+        ...prevWorkExp,
+        {
+          id: WorkExpID,
+          company: output.company,
+          position: output.position,
+          workYears: output.workYears,
+        },
+      ]);
       setBtnState((prevBtnState) => prevBtnState + 1);
     }
   };
@@ -82,7 +110,7 @@ function Menu() {
   const handleFormToggle = (form) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
-  const WorkExpViews = WorkExp.map((exp) => (
+  const WorkExpViews = workExp.map((exp) => (
     <div
       key={exp.id}
       className="flex flex-row text-black ml-6 text-xs overflow-y-auto max-h-48 max-width-prose"
@@ -94,7 +122,7 @@ function Menu() {
       </div>
     </div>
   ));
-  const SchoolExpViews = SchoolExp.map((exp) => (
+  const SchoolExpViews = schoolExp.map((exp) => (
     <div key={exp.id} className="flex flex-row text-white m-2 text-xs">
       <div className="font-bold">{exp.studyYears}</div>
       <div className="flex-col ml-2">
@@ -104,7 +132,7 @@ function Menu() {
     </div>
   ));
 
-  const SchoolExpEditable = SchoolExp.map((exp) => (
+  const SchoolExpEditable = schoolExp.map((exp) => (
     <div
       key={exp.id}
       className="flex flex-row text-black m-5 text-base max-h-48"
@@ -120,7 +148,7 @@ function Menu() {
       </div>
     </div>
   ));
-  const WorkExpEditable = WorkExp.map((exp) => (
+  const WorkExpEditable = workExp.map((exp) => (
     <div
       key={exp.id}
       className="flex flex-row text-black m-5 text-base max-h-48"
@@ -132,10 +160,7 @@ function Menu() {
       </div>
       <div className="flex items-end">
         <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
-        <Icon
-          clickHandler={() => console.log("Edit button not implemented yet")}
-          icon="edit"
-        />
+        <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
       </div>
     </div>
   ));
@@ -183,6 +208,8 @@ function Menu() {
           <SchoolForm
             onInputChange={handleInputChange}
             onClickHandler={handleFormAddClick}
+            isEditing={isEditing}
+            output={output}
           />
           <ExpContainer>{SchoolExpEditable}</ExpContainer>
         </FormCol>
@@ -192,6 +219,8 @@ function Menu() {
           <WorkForm
             onInputChange={handleInputChange}
             onClickHandler={handleFormAddClick}
+            isEditing={isEditing}
+            output={output}
           />
           <ExpContainer>{WorkExpEditable}</ExpContainer>
         </FormCol>

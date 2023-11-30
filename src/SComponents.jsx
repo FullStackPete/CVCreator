@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
 
@@ -29,44 +29,51 @@ function ExpContainer({ children }) {
 }
 
 function Input({
-  className = "m-5 p-2 rounded",
+  className = 'm-5 p-2 rounded',
   placeholder,
   name,
   onInputChange,
-  isTextArea, // Dodaj nową właściwość do oznaczania, czy to ma być textarea
+  isTextArea,
+  value,
+  isEditing, // Dodano prop isEditing
 }) {
-  const [output, setOutput] = useState("");
+  const [inputValue, setInputValue] = useState('');
+
+  useEffect(() => {
+    // Ustaw wartość początkową dla inputa na wartość przekazaną przez prop, gdy isEditing jest true
+    if (isEditing && value !== undefined) {
+      setInputValue(value);
+    }
+  }, [isEditing, value]);
+
   const handleChange = (e) => {
-    const value = e.target.value;
-    setOutput(value);
-    onInputChange && onInputChange(value, name);
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    onInputChange && onInputChange(newValue, name);
   };
 
   if (isTextArea) {
     return (
-      <>
-        <textarea
-          onChange={handleChange}
-          name={name}
-          placeholder={placeholder}
-          className={className}
-          value={output}
-        />
-      </>
-    );
-  }
-
-  return (
-    <>
-      <input
+      <textarea
         onChange={handleChange}
         name={name}
         placeholder={placeholder}
         className={className}
-        value={output}
+        value={inputValue}
       />
-    </>
+    );
+  }
+
+  return (
+    <input
+      onChange={handleChange}
+      name={name}
+      placeholder={placeholder}
+      className={className}
+      value={inputValue}
+    />
   );
 }
+
 
 export { FormCol, Icon, ExpContainer, Input };

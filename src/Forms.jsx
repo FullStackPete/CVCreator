@@ -27,18 +27,21 @@ function Form({ children }) {
 export function BasicForm({ onInputChange }) {
   return (
     <Form>
-      <Input onInputChange={onInputChange} name="name" placeholder="Jonna" />
+      <Input key="name" onInputChange={onInputChange} name="name" placeholder="Jonna" />
       <Input
+      key="lastname"
         onInputChange={onInputChange}
         name="lastname"
         placeholder="Jinton"
       />
       <Input
+      key="desiredpos"
         onInputChange={onInputChange}
         name="desiredpos"
         placeholder="What position are you applying for?"
       />
       <Input
+      key="about"
         onInputChange={onInputChange}
         name="about"
         placeholder="About me"
@@ -48,46 +51,61 @@ export function BasicForm({ onInputChange }) {
   );
 }
 
-export function SchoolForm({ onInputChange, onClickHandler }) {
+export function SchoolForm({ onInputChange, onClickHandler, isEditing, output }) {
   return (
     <Form>
       <Input
         onInputChange={onInputChange}
         name="uniname"
         placeholder="University of Opole"
+        value={output.uniname} // Ustawienie value dla Input
+        isEditing={isEditing}
       />
       <Input
         onInputChange={onInputChange}
         name="major"
         placeholder="Information Technology"
+        value={output.major} // Ustawienie value dla Input
+        isEditing={isEditing}
       />
       <Input
         onInputChange={onInputChange}
         name="studyYears"
         placeholder="Year 2017-2020"
+        value={output.studyYears} // Ustawienie value dla Input
+        isEditing={isEditing}
       />
       <AddButton onClickHandler={onClickHandler} />
     </Form>
   );
 }
 
-export function WorkForm({ onInputChange, onClickHandler }) {
+export function WorkForm({ onInputChange, onClickHandler, isEditing, output }) {
   return (
     <Form>
       <Input
+      key="company"
         onInputChange={onInputChange}
         name="company"
         placeholder="Google"
+        value={output.company}
+        isEditing={isEditing}
       />
       <Input
+      key="position"
         onInputChange={onInputChange}
         name="position"
         placeholder="Full stack web developer"
+        value={output.position}
+        isEditing={isEditing}
       />
       <Input
+      key="workYears"
         onInputChange={onInputChange}
         name="workYears"
         placeholder="2020-current"
+        value={output.workYears}
+        isEditing={isEditing}
       />
       <AddButton onClickHandler={onClickHandler} />
     </Form>
