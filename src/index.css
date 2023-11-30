@@ -38,3 +38,10 @@ height:20rem;
   width: 100%;
   overflow-wrap: break-word;
 }
+.form-icon{
+  transition:transform 0.3s ease;
+}
+.form-icon.open{
+  transform:rotate(90deg);
+}
+

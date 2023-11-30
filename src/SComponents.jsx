@@ -1,17 +1,14 @@
-import { useState,useEffect } from "react";
-
-
+import { useState, useEffect } from "react";
 
 function FormCol({ children }) {
   return <div className="flex flex-col w-4/12">{children}</div>;
 }
 
-function Icon({ icon, clickHandler }) {
-  
+function Icon({ icon, clickHandler, isActive }) {
   let styledIcon;
-  if (icon == "Description" || icon == "School" || icon=="Work") {
+  if (icon == "Description" || icon == "School" || icon == "Work") {
     styledIcon =
-      "flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";
+      "form-icon flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";
   } else {
     styledIcon =
       "flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer ml-2 text-gray-800";
@@ -19,17 +16,21 @@ function Icon({ icon, clickHandler }) {
 
   return (
     <button onClick={clickHandler}>
-      <span className={styledIcon}>{icon}</span>
+      <span className={`${styledIcon} ${isActive ? "open" : ""}`}>{icon}</span>
     </button>
   );
 }
 
 function ExpContainer({ children }) {
-  return <div className="bg-slate-300 max-w-fit break-words whitespace-normal rounded m-4 h-fit">{children}</div>;
+  return (
+    <div className="bg-slate-300 max-w-fit break-words whitespace-normal rounded m-4 h-fit">
+      {children}
+    </div>
+  );
 }
 
 function Input({
-  className = 'm-5 p-2 rounded',
+  className = "m-5 p-2 rounded",
   placeholder,
   name,
   onInputChange,
@@ -37,7 +38,7 @@ function Input({
   value,
   isEditing, // Dodano prop isEditing
 }) {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     // Ustaw wartość początkową dla inputa na wartość przekazaną przez prop, gdy isEditing jest true
@@ -74,6 +75,5 @@ function Input({
     />
   );
 }
-
 
 export { FormCol, Icon, ExpContainer, Input };

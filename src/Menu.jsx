@@ -107,7 +107,7 @@ function Menu() {
     setMenuIsOpen(!menuIsOpen);
   };
 
-  const handleFormToggle = (form) => {
+  const handleFormToggle = (form) => {    
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
   const WorkExpViews = workExp.map((exp) => (
@@ -187,14 +187,18 @@ function Menu() {
         <Icon
           clickHandler={() => handleFormToggle("BasicForm")}
           icon="Description"
+          isActive={activeForm ==="BasicForm"}
+          
         ></Icon>
         <Icon
           clickHandler={() => handleFormToggle("SchoolForm")}
           icon="School"
+          isActive={activeForm ==="SchoolForm"}
         ></Icon>
         <Icon
           clickHandler={() => handleFormToggle("WorkForm")}
           icon="Work"
+          isActive={activeForm ==="WorkForm"}
         ></Icon>
       </div>
 
