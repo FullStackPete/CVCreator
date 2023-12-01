@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
-function FormCol({ children }) {
-  return <div className="flex flex-col w-4/12">{children}</div>;
+function FormCol({ children, isFormActive }) {
+  return <div className={`form-col flex flex-col ${isFormActive ? "w-4/12" : "w-0"}`}>{children}</div>;
 }
 
 function Icon({ icon, clickHandler, isActive }) {

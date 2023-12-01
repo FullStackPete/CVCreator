@@ -107,7 +107,7 @@ function Menu() {
     setMenuIsOpen(!menuIsOpen);
   };
 
-  const handleFormToggle = (form) => {    
+  const handleFormToggle = (form) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
   const WorkExpViews = workExp.map((exp) => (
@@ -187,48 +187,48 @@ function Menu() {
         <Icon
           clickHandler={() => handleFormToggle("BasicForm")}
           icon="Description"
-          isActive={activeForm ==="BasicForm"}
-          
+          isActive={activeForm === "BasicForm"}
         ></Icon>
         <Icon
           clickHandler={() => handleFormToggle("SchoolForm")}
           icon="School"
-          isActive={activeForm ==="SchoolForm"}
+          isActive={activeForm === "SchoolForm"}
         ></Icon>
         <Icon
           clickHandler={() => handleFormToggle("WorkForm")}
           icon="Work"
-          isActive={activeForm ==="WorkForm"}
+          isActive={activeForm === "WorkForm"}
         ></Icon>
       </div>
 
-      {activeForm === "BasicForm" && (
-        <FormCol>
+      <FormCol isFormActive={activeForm}>
+        {activeForm === "BasicForm" && (
           <BasicForm onInputChange={handleInputChange} />
-        </FormCol>
-      )}
-      {activeForm === "SchoolForm" && (
-        <FormCol>
-          <SchoolForm
-            onInputChange={handleInputChange}
-            onClickHandler={handleFormAddClick}
-            isEditing={isEditing}
-            output={output}
-          />
-          <ExpContainer>{SchoolExpEditable}</ExpContainer>
-        </FormCol>
-      )}
-      {activeForm === "WorkForm" && (
-        <FormCol>
-          <WorkForm
-            onInputChange={handleInputChange}
-            onClickHandler={handleFormAddClick}
-            isEditing={isEditing}
-            output={output}
-          />
-          <ExpContainer>{WorkExpEditable}</ExpContainer>
-        </FormCol>
-      )}
+        )}
+        {activeForm === "SchoolForm" && (
+          <>
+            <SchoolForm
+              onInputChange={handleInputChange}
+              onClickHandler={handleFormAddClick}
+              isEditing={isEditing}
+              output={output}
+            />
+            <ExpContainer>{SchoolExpEditable}</ExpContainer>
+          </>
+        )}
+        {activeForm === "WorkForm" && (
+          <>
+            <WorkForm
+              onInputChange={handleInputChange}
+              onClickHandler={handleFormAddClick}
+              isEditing={isEditing}
+              output={output}
+            />
+            <ExpContainer>{WorkExpEditable}</ExpContainer>
+          </>
+        )}
+      </FormCol>
+
       <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
         <div className="left-bar bg-gray-800 flex-col h-big w-32">
           <p className="my-6 text-center tracking-widest border-b-2">

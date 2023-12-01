@@ -45,3 +45,7 @@ height:20rem;
   transform:rotate(90deg);
 }
 
+.form-col{
+  overflow:hidden;
+  transition: width 0.5s ease;
+}
