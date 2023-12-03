@@ -15,12 +15,14 @@ function Menu() {
     name: "",
     lastname: "",
     desiredpos: "",
-    about: "",
+    about: null,
     uniname: "",
     major: "",
     studyYears: "",
     company: "",
     position: "",
+    email: "",
+    phone:"",
     workYears: "",
   });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -229,16 +231,36 @@ function Menu() {
         )}
       </FormCol>
 
+
+
       <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
-        <div className="left-bar bg-gray-800 flex-col h-big w-32">
-          <p className="my-6 text-center tracking-widest border-b-2">
-            EDUCATION
-          </p>
+        <div className="left-bar bg-gray-800 flex-col h-big w-48">
+          {schoolExp.length > 0 && (
+            <p className="my-6 text-center tracking-widest border-b-2">
+              EDUCATION
+            </p>
+          )}
           {SchoolExpViews}
+          <div className="flex flex-col mt-10 text-xs">
+          
+            <div className="flex flex-row bg-gray-700">
+              <span className=" bg-yellow-400 w-10 h-4"></span>
+              <p className="ml-2">Phone</p>
+            </div>
+            <div className="ml-12">{output.phone}</div>
+            <br />         
+            <div className="flex flex-row bg-gray-700">
+              <span className=" bg-yellow-400 w-10 h-4"></span>
+              <p className="ml-2">Email</p>
+            </div>         
+            <div className="ml-12">{output.email}</div>   
+          </div>
+
         </div>
-        <div className="right-bar flex-col ">
+
+        <div className="flex-col ">
           <div className="h-10"></div>
-          <div className="bg-yellow-400 w-96 h-28 text-black tracking-widest leading-3 max-h-32">
+          <div className="bg-yellow-400 right-bar h-28 text-black tracking-widest leading-3 max-h-32">
             <div className="bg-yellow-400 h-2"></div>
             <p className="ml-6 mt-4 text-3xl">
               <span className="font-bold">{output.name}</span> {output.lastname}
@@ -246,16 +268,21 @@ function Menu() {
             <br />
             <p className="ml-6 text-2xl">{output.desiredpos}</p>
           </div>
-          <div className="text-black ml-6 text-sm tracking-widest font-semibold mt-4 border-black border-b-2">
-            ABOUT ME
-          </div>
+          {output.about && (
+            <div className="text-black ml-6 text-sm tracking-widest font-semibold mt-4 border-black border-b-2">
+              ABOUT ME
+            </div>
+          )}
           <div className="text-black ml-6 text-xs overflow-y-auto max-width-prose">
             {output.about}
           </div>
           <br />
-          <div className="text-black ml-6 text-sm tracking-widest font-semibold border-black border-b-2">
-            WORK EXPERIENCE
-          </div>
+
+          {workExp.length > 0 && (
+            <div className="text-black ml-6 text-sm tracking-widest font-semibold border-black border-b-2">
+              WORK EXPERIENCE
+            </div>
+          )}
           {WorkExpViews}
         </div>
       </div>

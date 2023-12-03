@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Input} from "./SComponents";
+import { Input } from "./SComponents";
 
 function AddButton({ onClickHandler }) {
   return (
@@ -14,9 +14,6 @@ function AddButton({ onClickHandler }) {
   );
 }
 
-
-
-
 function Form({ children }) {
   return (
     <div className="flex flex-col forms-container bg-slate-300 rounded m-4 h-fit">
@@ -27,21 +24,40 @@ function Form({ children }) {
 export function BasicForm({ onInputChange }) {
   return (
     <Form>
-      <Input key="name" onInputChange={onInputChange} name="name" placeholder="Jonna" />
       <Input
-      key="lastname"
+        key="name"
+        onInputChange={onInputChange}
+        name="name"
+        placeholder="John"
+      />
+      <Input
+        key="lastname"
         onInputChange={onInputChange}
         name="lastname"
-        placeholder="Jinton"
+        placeholder="Doe"
       />
       <Input
-      key="desiredpos"
+        key="desiredpos"
         onInputChange={onInputChange}
         name="desiredpos"
-        placeholder="What position are you applying for?"
+        placeholder="Full-stack web developer"
       />
       <Input
-      key="about"
+        onInputChange={onInputChange}
+        key="phone"
+        name="phone"
+        placeholder="+48123456789"
+      />
+
+      <Input
+        onInputChange={onInputChange}
+        key="email"
+        name="email"
+        placeholder="example@mail.com"
+      />
+
+      <Input
+        key="about"
         onInputChange={onInputChange}
         name="about"
         placeholder="About me"
@@ -51,13 +67,18 @@ export function BasicForm({ onInputChange }) {
   );
 }
 
-export function SchoolForm({ onInputChange, onClickHandler, isEditing, output }) {
+export function SchoolForm({
+  onInputChange,
+  onClickHandler,
+  isEditing,
+  output,
+}) {
   return (
     <Form>
       <Input
         onInputChange={onInputChange}
         name="uniname"
-        placeholder="University of Opole"
+        placeholder="Warsaw university"
         value={output.uniname} // Ustawienie value dla Input
         isEditing={isEditing}
       />
@@ -84,7 +105,7 @@ export function WorkForm({ onInputChange, onClickHandler, isEditing, output }) {
   return (
     <Form>
       <Input
-      key="company"
+        key="company"
         onInputChange={onInputChange}
         name="company"
         placeholder="Google"
@@ -92,7 +113,7 @@ export function WorkForm({ onInputChange, onClickHandler, isEditing, output }) {
         isEditing={isEditing}
       />
       <Input
-      key="position"
+        key="position"
         onInputChange={onInputChange}
         name="position"
         placeholder="Full stack web developer"
@@ -100,7 +121,7 @@ export function WorkForm({ onInputChange, onClickHandler, isEditing, output }) {
         isEditing={isEditing}
       />
       <Input
-      key="workYears"
+        key="workYears"
         onInputChange={onInputChange}
         name="workYears"
         placeholder="2020-current"
