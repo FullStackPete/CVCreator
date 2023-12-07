@@ -1,5 +1,6 @@
 import { BasicForm, SchoolForm, WorkForm } from "./Forms";
 import { FormCol, Icon, ExpContainer } from "./SComponents";
+import {PictureImage,PictureInput} from "./Profile";
 import { useState } from "react";
 
 let SchoolExpID = 0;
@@ -21,12 +22,30 @@ function Menu() {
     studyYears: "",
     company: "",
     position: "",
+    workYears: "",
     email: "",
     phone:"",
-    workYears: "",
   });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
+  const [image, setImage] = useState(null);
+
+  const loadExampleData=()=>{
+    setOutput(({name:"John",lastname:"Doe",desiredpos:"Full-stack web developer",
+    about:"Hi! I am a junior full-stack web developer mainly working in NodeJS and React. Lately I also decided to learn C# and I found it very pleasant. My github profile is github.com/FullStackPete - please visit to see my other projects!"
+  ,phone:"+48 987654321",email:"example@mail.com"}))
+  SchoolExpID++;
+    setSchoolExp((prevSchoolExp) => [
+      ...prevSchoolExp,
+      {
+        id: SchoolExpID,
+        uniname:"University of Opole",
+        major:"Information Technology",
+        studyYears: "2022-current"
+      },
+    ]);
+    
+  }
 
   const handleExpEdit = (id) => {
     if (activeForm === "SchoolForm") {
@@ -205,7 +224,11 @@ function Menu() {
 
       <FormCol isFormActive={activeForm}>
         {activeForm === "BasicForm" && (
+          <>
           <BasicForm onInputChange={handleInputChange} />
+          <PictureInput setImage={setImage}/>
+          <button onClick={loadExampleData}>Load example data</button>
+          </>
         )}
         {activeForm === "SchoolForm" && (
           <>
@@ -234,7 +257,10 @@ function Menu() {
 
 
       <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
-        <div className="left-bar bg-gray-800 flex-col h-big w-48">
+        <div className="left-bar justify-center  bg-gray-800 flex-col h-big w-48">
+
+          <PictureImage image={image}/>
+          
           {schoolExp.length > 0 && (
             <p className="my-6 text-center tracking-widest border-b-2">
               EDUCATION
@@ -277,7 +303,7 @@ function Menu() {
             {output.about}
           </div>
           <br />
-
+            
           {workExp.length > 0 && (
             <div className="text-black ml-6 text-sm tracking-widest font-semibold border-black border-b-2">
               WORK EXPERIENCE

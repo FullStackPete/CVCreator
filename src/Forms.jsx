@@ -92,7 +92,7 @@ export function SchoolForm({
       <Input
         onInputChange={onInputChange}
         name="studyYears"
-        placeholder="Year 2017-2020"
+        placeholder="2017-2020"
         value={output.studyYears} // Ustawienie value dla Input
         isEditing={isEditing}
       />

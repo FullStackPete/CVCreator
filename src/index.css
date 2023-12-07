@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+#pictureImg{
+  width: 195px;
+  height: 195px;
+  max-width: 100%; /* Zapewnia, że obraz nie wyjdzie poza szerokość kontenera */
+  max-height: 100%; /* Zapewnia, że obraz nie wyjdzie poza wysokość kontenera */
+  border-radius: 50%; /* Ustawienie na 50% powoduje, że obraz ma kształt kółka */
+  object-fit: cover; /* Zapewnia, że obraz wypełni całe kółko */
+}
+#profilepic-input{
+  display:none;
+}
 .CV {
   max-height: 800px;
   overflow-y: auto;
