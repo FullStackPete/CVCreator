@@ -8,12 +8,13 @@ function Icon({ icon, clickHandler, isActive }) {
   let styledIcon;
   if (icon == "Description" || icon == "School" || icon == "Work") {
     styledIcon =
-      "form-icon flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";
-  } else {
+      "form-icon flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";  
+    } else if(icon=="delete"){
+    styledIcon="flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer ml-2 text-red-700";
+    }else {
     styledIcon =
       "flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer ml-2 text-gray-800";
-  }
-
+    }
   return (
     <button onClick={clickHandler}>
       <span className={`${styledIcon} ${isActive ? "open" : ""}`}>{icon}</span>
