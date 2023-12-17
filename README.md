@@ -1,4 +1,4 @@
-# Project Name
+# CVCreator
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -54,6 +54,7 @@ Clearly present your education history and work experience, including details li
 
 - ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
 - ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
+- ![Prettier](https://img.shields.io/badge/-Prettier-F7B93E?logo=prettier&logoColor=black)
 
 ## Screenshots
 
