@@ -29,18 +29,24 @@ function Menu() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState(null);
   const [image, setImage] = useState(null);
+  const [showDeleteOutput, setShowDeleteOutput] = useState(false);
 
-  const handleOutputDelete =()=>{
-    setOutput({name: "",
-    lastname: "",
-    desiredpos: "",
-    about: null,
-    email: null,
-    phone: null,})
+  const handleOutputDelete = () => {
+    
+    setOutput({
+      name: "",
+      lastname: "",
+      desiredpos: "",
+      about: null,
+      email: null,
+      phone: null,
+    });
     setWorkExp([]);
     setSchoolExp([]);
-  }
+    setShowDeleteOutput(false);
+  };
   const loadExampleData = () => {
+    setShowDeleteOutput(true);
     setOutput({
       name: "John",
       lastname: "Doe",
@@ -115,7 +121,7 @@ function Menu() {
     }
   };
   const handleFormAddClick = () => {
-    if (activeForm == "SchoolForm") {
+    if (activeForm == "SchoolForm" && output.uniname!= "" && output.major!= "" && output.studyYears!= "") {
       SchoolExpID++;
       setSchoolExp((prevSchoolExp) => [
         ...prevSchoolExp,
@@ -127,7 +133,7 @@ function Menu() {
         },
       ]);
       setBtnState((prevBtnState) => prevBtnState + 1);
-    } else if (activeForm == "WorkForm") {
+    } else if (activeForm == "WorkForm"&& output.company!= "" && output.position!= "" && output.workYears!= "") {
       WorkExpID++;
       setWorkExp((prevWorkExp) => [
         ...prevWorkExp,
@@ -188,7 +194,7 @@ function Menu() {
         <div className="font-bold">{exp.uniname}</div>
         <div>{exp.major}</div>
       </div>
-      <div className="flex items-end">
+      <div className="flex">
         <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
         <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
       </div>
@@ -204,7 +210,7 @@ function Menu() {
         <div className="font-bold">{exp.company}</div>
         <div>{exp.position}</div>
       </div>
-      <div className="flex items-end">
+      <div className="flex">
         <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
         <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
       </div>
@@ -252,10 +258,17 @@ function Menu() {
           <>
             <BasicForm onInputChange={handleInputChange} />
             <PictureInput setImage={setImage} />
-            
+
             <button onClick={loadExampleData}>Load example data</button>
-            <Icon icon="delete" clickHandler={()=>handleOutputDelete()}></Icon>
+            {showDeleteOutput &&
+            <Icon
+              icon="delete"
+              title="Delete example data"
+              clickHandler={() => handleOutputDelete()}
+            ></Icon>
+            }
           </>
+
         )}
         {activeForm === "SchoolForm" && (
           <>
@@ -281,8 +294,6 @@ function Menu() {
         )}
       </FormCol>
 
-
-          
       <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
         <div className="left-bar justify-center  bg-gray-800 flex-col h-big w-48">
           <PictureImage image={image} />
@@ -303,11 +314,12 @@ function Menu() {
             <div className="ml-12">{output.phone}</div>
             <br />
 
-              {output.email &&
-            <div className="flex flex-row bg-gray-700">
-              <span className=" bg-yellow-400 w-10 h-4"></span>
-              <p className="ml-2">Email</p>
-            </div>}
+            {output.email && (
+              <div className="flex flex-row bg-gray-700">
+                <span className=" bg-yellow-400 w-10 h-4"></span>
+                <p className="ml-2">Email</p>
+              </div>
+            )}
             <div className="ml-12">{output.email}</div>
           </div>
         </div>

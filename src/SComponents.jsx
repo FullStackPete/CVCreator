@@ -1,23 +1,32 @@
 import { useState, useEffect } from "react";
 
 function FormCol({ children, isFormActive }) {
-  return <div className={`form-col flex flex-col ${isFormActive ? "w-4/12" : "w-0"}`}>{children}</div>;
+  return (
+    <div
+      className={`form-col flex flex-col ${isFormActive ? "w-4/12" : "w-0"}`}
+    >
+      {children}
+    </div>
+  );
 }
 
-function Icon({ icon, clickHandler, isActive }) {
+function Icon({ icon, clickHandler, isActive, title }) {
   let styledIcon;
   if (icon == "Description" || icon == "School" || icon == "Work") {
     styledIcon =
-      "form-icon flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";  
-    } else if(icon=="delete"){
-    styledIcon="flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer ml-2 text-red-700";
-    }else {
+      "form-icon flex justify-center items-center icons material-symbols-outlined text-5xl cursor-pointer my-4 rounded text-gray-800";
+  } else if (icon == "delete") {
+    styledIcon =
+      "flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer my-4 text-red-700";
+  } else {
     styledIcon =
       "flex justify-center items-center material-symbols-outlined text-4xl cursor-pointer ml-2 text-gray-800";
-    }
+  }
   return (
     <button onClick={clickHandler}>
-      <span className={`${styledIcon} ${isActive ? "open" : ""}`}>{icon}</span>
+      <span title={title} className={`${styledIcon} ${isActive ? "open" : ""}`}>
+        {icon}
+      </span>
     </button>
   );
 }
