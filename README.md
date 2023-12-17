@@ -52,8 +52,8 @@ Clearly present your education history and work experience, including details li
 
 ## Technologies Used
 
-- React
-- Tailwind CSS
+- ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+- ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
 
 ## Screenshots
 
