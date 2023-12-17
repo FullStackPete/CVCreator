@@ -25,8 +25,9 @@ cd CVCreator
 npm i
 npm run build
 npm run preview
-go to -> http://localhost:4173/CVCreator/
 ```
+Then go to -> http://localhost:4173/CVCreator/
+
 ## Usage
 
 Click on the menu icon in top left corner and the proceed to click on one of the 3 icons that slide from top. Those icons will let you input your data into the CV on the right. 
