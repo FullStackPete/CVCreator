@@ -1,4 +1,4 @@
-# Project Name
+# CVCreator
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
@@ -25,8 +25,9 @@ cd CVCreator
 npm i
 npm run build
 npm run preview
-go to -> http://localhost:4173/CVCreator/
 ```
+Then go to -> http://localhost:4173/CVCreator/
+
 ## Usage
 
 Click on the menu icon in top left corner and the proceed to click on one of the 3 icons that slide from top. Those icons will let you input your data into the CV on the right. 
@@ -52,8 +53,9 @@ Clearly present your education history and work experience, including details li
 
 ## Technologies Used
 
-- React
-- Tailwind CSS
+- ![React](https://img.shields.io/badge/-React-61DAFB?logo=react&logoColor=white)
+- ![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC?logo=tailwind-css&logoColor=white)
+- ![Prettier](https://img.shields.io/badge/-Prettier-F7B93E?logo=prettier&logoColor=black)
 
 ## Screenshots
 
