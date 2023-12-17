@@ -26,8 +26,8 @@ function Menu() {
     email: null,
     phone: null,
   });
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [activeForm, setActiveForm] = useState(null);
+  const [menuIsOpen, setMenuIsOpen] = useState(true);
+  const [activeForm, setActiveForm] = useState("BasicForm");
   const [image, setImage] = useState(null);
   const [showDeleteOutput, setShowDeleteOutput] = useState(false);
 
@@ -35,11 +35,17 @@ function Menu() {
     
     setOutput({
       name: "",
-      lastname: "",
-      desiredpos: "",
-      about: null,
-      email: null,
-      phone: null,
+    lastname: "",
+    desiredpos: "",
+    about: null,
+    uniname: "",
+    major: "",
+    studyYears: "",
+    company: "",
+    position: "",
+    workYears: "",
+    email: null,
+    phone: null,
     });
     setWorkExp([]);
     setSchoolExp([]);
