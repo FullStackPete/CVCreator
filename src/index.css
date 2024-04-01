@@ -2,8 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-.CV{
-  max-height:720px;
+@layer components {
+  .transition-height-1s {
+    transition: height 1s ease;
+  }
+  .transition-width-1s {
+    transition: width 1s ease;
+  }
+}
+#pictureImg {
+  width: 195px;
+  height: 195px;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#profilepic-input {
+  display: none;
+}
+.CV {
+  max-height: 600px;
+  min-height: 600px;
+  min-width: 420px;
+  max-width: 422px;
   overflow-y: auto;
 }
 
@@ -19,22 +41,27 @@
   transform: rotate(180deg);
 }
 
-.menu{
-  height:5rem;
-  overflow: hidden;
-  transform:translateY(0);
-  transition: height 1s ease;
-  
+.menu {
+  @apply overflow-hidden transition-width-1s md:transition-height-1s;
 }
-.show-menu{
-height:20rem;
+.show-menu {
+  @apply w-80 md:h-80 md:w-20;
 }
-.h-big{
-  height: 720px;
-  max-height: 720px;
-}
+
 .max-width-prose {
-  max-width: 360px; 
+  max-width: 360px;
   width: 100%;
   overflow-wrap: break-word;
+}
+
+.form-icon {
+  transition: transform 0.3s ease;
+}
+.form-icon.open {
+  transform: rotate(90deg);
+}
+
+.form-col {
+  overflow: hidden;
+  transition: width 0.5s ease;
 }
