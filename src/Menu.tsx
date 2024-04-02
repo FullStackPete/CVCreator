@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ExpContainer from "./components/ExpContainer";
 import BasicForm from "./components/Forms/BasicForm";
 import FormCol from "./components/Forms/FormCol";
@@ -6,6 +6,9 @@ import SchoolForm from "./components/Forms/SchoolForm";
 import WorkForm from "./components/Forms/WorkForm";
 import Icon from "./components/Icon";
 import { PictureInput, PictureImage } from "./components/Forms/ProfilePicture";
+import UtilitiesForm from "./components/Forms/UtilitiesForm";
+import CV from "./components/CV/CV";
+import { useReactToPrint } from "react-to-print";
 
 type SchoolExpType = {
   id: number;
@@ -30,6 +33,7 @@ function Menu() {
   const [schoolExp, setSchoolExp] = useState([]);
   const [workExp, setWorkExp] = useState([]);
   const [showDeleteOutput, setShowDeleteOutput] = useState(false);
+  const CVComponent = useRef();
   const [output, setOutput] = useState({
     name: "",
     lastname: "",
@@ -47,6 +51,27 @@ function Menu() {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
   const [activeForm, setActiveForm] = useState<string | null>(null);
 
+  const handleOutputDelete = () => {
+    setOutput({
+      name: "",
+      lastname: "",
+      desiredpos: "",
+      about: "",
+      uniname: "",
+      major: "",
+      studyYears: "",
+      company: "",
+      position: "",
+      workYears: "",
+      email: "",
+      phone: "",
+    });
+    setWorkExp([]);
+    setSchoolExp([]);
+    setShowDeleteOutput(false);
+    console.log(image);
+  };
+
   const loadExampleData = () => {
     setShowDeleteOutput(true);
     setOutput({
@@ -57,22 +82,28 @@ function Menu() {
         "Hi! I am a junior full-stack web developer mainly working in NodeJS and React. Lately I also decided to learn C# and I found it very pleasant. My github profile is github.com/FullStackPete - please visit to see my other projects!",
       phone: "+48 987654321",
       email: "example@mail.com",
+      uniname: "",
+      major: "",
+      position: "",
+      company: "",
+      workYears: "",
+      studyYears: "",
     });
-    SchoolExpID++;
+    SchoolExpId++;
     setSchoolExp((prevSchoolExp) => [
       ...prevSchoolExp,
       {
-        id: SchoolExpID,
+        id: SchoolExpId,
         uniname: "University of Opole",
         major: "Information Technology",
         studyYears: "2022-current",
       },
     ]);
-    WorkExpID++;
+    WorkExpId++;
     setWorkExp((prevWorkExp) => [
       ...prevWorkExp,
       {
-        id: WorkExpID,
+        id: WorkExpId,
         company: "Example company",
         position: "Full-stack web developer",
         workYears: "2023-current",
@@ -129,11 +160,11 @@ function Menu() {
       output.major != "" &&
       output.studyYears != ""
     ) {
-      SchoolExpID++;
+      SchoolExpId++;
       setSchoolExp((prevSchoolExp) => [
         ...prevSchoolExp,
         {
-          id: SchoolExpID,
+          id: SchoolExpId,
           uniname: output.uniname,
           major: output.major,
           studyYears: output.studyYears,
@@ -146,11 +177,11 @@ function Menu() {
       output.position != "" &&
       output.workYears != ""
     ) {
-      WorkExpID++;
+      WorkExpId++;
       setWorkExp((prevWorkExp) => [
         ...prevWorkExp,
         {
-          id: WorkExpID,
+          id: WorkExpId,
           company: output.company,
           position: output.position,
           workYears: output.workYears,
@@ -174,10 +205,12 @@ function Menu() {
   const handleFormToggle = (form) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
+  const handlePrint = useReactToPrint({ content: () => CVComponent.current });
+
   const WorkExpViews = workExp.map((exp) => (
     <div
       key={exp.id}
-      className="flex flex-row text-black ml-6 text-xs overflow-y-auto max-h-48 max-width-prose"
+      className="flex flex-row text-black ml-6 text-xs max-h-48"
     >
       <div className="font-bold">{exp.workYears}</div>
       <div className="flex flex-col ml-2">
@@ -187,7 +220,7 @@ function Menu() {
     </div>
   ));
   const SchoolExpViews = schoolExp.map((exp) => (
-    <div key={exp.id} className="flex flex-row text-white m-2 text-xs">
+    <div key={exp.id} className="flex flex-row text-white m-2  text-xs">
       <div className="font-bold">{exp.studyYears}</div>
       <div className="flex-col ml-2">
         <div className="font-bold">{exp.uniname}</div>
@@ -207,8 +240,18 @@ function Menu() {
         <div>{exp.major}</div>
       </div>
       <div className="flex">
-        <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
-        <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
+        <Icon
+          clickHandler={() => handleExpDelete(exp.id)}
+          icon="delete"
+          isActive={false}
+          title={""}
+        />
+        <Icon
+          clickHandler={() => handleExpEdit(exp.id)}
+          icon="edit"
+          isActive={false}
+          title={""}
+        />
       </div>
     </div>
   ));
@@ -223,8 +266,18 @@ function Menu() {
         <div>{exp.position}</div>
       </div>
       <div className="flex">
-        <Icon clickHandler={() => handleExpDelete(exp.id)} icon="delete" />
-        <Icon clickHandler={() => handleExpEdit(exp.id)} icon="edit" />
+        <Icon
+          clickHandler={() => handleExpDelete(exp.id)}
+          icon="delete"
+          isActive={false}
+          title={""}
+        />
+        <Icon
+          clickHandler={() => handleExpEdit(exp.id)}
+          icon="edit"
+          isActive={false}
+          title={""}
+        />
       </div>
     </div>
   ));
@@ -232,7 +285,7 @@ function Menu() {
     <>
       <div
         id="menu"
-        className={`flex md:flex-col flex-row  bg-slate-300 rounded m-4 items-center text-center transform-origin transform-origin transition-all h-20 w-20 
+        className={`flex lg:flex-col flex-row mb-4 lg:mr-2 bg-slate-300 rounded m-2 items-center text-center transform-origin transform-origin transition-all h-20 w-20 
         menu ${menuIsOpen ? "show-menu" : ""}
         `}
       >
@@ -246,37 +299,44 @@ function Menu() {
             {!menuIsOpen ? "menu" : "close"}
           </span>
         </button>
-
+        <Icon
+          isActive={activeForm === "UtilitiesForm"}
+          icon="Home"
+          clickHandler={() => handleFormToggle("UtilitiesForm")}
+          title={""}
+        />
         <Icon
           clickHandler={() => handleFormToggle("BasicForm")}
           icon="Description"
           isActive={activeForm === "BasicForm"}
-        ></Icon>
+          title={""}
+        />
         <Icon
           clickHandler={() => handleFormToggle("SchoolForm")}
           icon="School"
           isActive={activeForm === "SchoolForm"}
-        ></Icon>
+          title={""}
+        />
         <Icon
           clickHandler={() => handleFormToggle("WorkForm")}
           icon="Work"
           isActive={activeForm === "WorkForm"}
-        ></Icon>
+          title={""}
+        />
       </div>
       <FormCol isFormActive={activeForm}>
+        {activeForm === "UtilitiesForm" && (
+          <UtilitiesForm
+            showDeleteOutput={showDeleteOutput}
+            handleOutputDelete={handleOutputDelete}
+            loadExampleData={loadExampleData}
+            setImage={setImage}
+            downloadCV={handlePrint}
+          />
+        )}
         {activeForm === "BasicForm" && (
           <>
             <BasicForm onInputChange={handleInputChange} />
-            <PictureInput setImage={setImage} />
-
-            <button onClick={loadExampleData}>Load example data</button>
-            {showDeleteOutput && (
-              <Icon
-                icon="delete"
-                title="Delete example data"
-                clickHandler={() => handleOutputDelete()}
-              ></Icon>
-            )}
           </>
         )}
         {activeForm === "SchoolForm" && (
@@ -302,64 +362,15 @@ function Menu() {
           </>
         )}
       </FormCol>
-
-      <div className="CV flex flex-row m-2 h-big shadow-black shadow-lg text-white">
-        <div className="left-bar bg-gray-800 flex-col min-w-[8rem]">
-          <PictureImage image={image} />
-
-          {schoolExp.length > 0 && (
-            <p className="my-6 text-center tracking-widest border-b-2">
-              EDUCATION
-            </p>
-          )}
-          {SchoolExpViews}
-          <div className="flex flex-col mt-10 text-xs">
-            {output.phone && (
-              <div className="flex flex-row bg-gray-700">
-                <span className=" bg-yellow-400 w-10 h-4"></span>
-                <p className="ml-2">Phone</p>
-              </div>
-            )}
-            <div className="ml-12">{output.phone}</div>
-            <br />
-
-            {output.email && (
-              <div className="flex flex-row bg-gray-700">
-                <span className=" bg-yellow-400 w-10 h-4"></span>
-                <p className="ml-2">Email</p>
-              </div>
-            )}
-            <div className="ml-12">{output.email}</div>
-          </div>
-        </div>
-        <div className="flex-col w-full">
-          <div className="h-10"></div>
-          <div className="bg-yellow-400  w-full h-28 text-black tracking-widest leading-3 max-h-32">
-            <div className="bg-yellow-400 h-2"></div>
-            <p className="ml-6 mt-4 text-3xl">
-              <span className="font-bold">{output.name}</span> {output.lastname}
-            </p>
-            <br />
-            <p className="ml-6 text-2xl">{output.desiredpos}</p>
-          </div>
-          {output.about && (
-            <div className="text-black ml-6 text-sm tracking-widest font-semibold mt-4 border-black border-b-2">
-              ABOUT ME
-            </div>
-          )}
-          <div className="text-black ml-6 text-xs overflow-y-auto max-width-prose">
-            {output.about}
-          </div>
-          <br />
-
-          {workExp.length > 0 && (
-            <div className="text-black ml-6 text-sm tracking-widest font-semibold border-black border-b-2">
-              WORK EXPERIENCE
-            </div>
-          )}
-          {WorkExpViews}
-        </div>
-      </div>
+      <CV
+        reference={CVComponent}
+        schoolExp={schoolExp}
+        image={image}
+        SchoolExpViews={SchoolExpViews}
+        output={output}
+        workExp={workExp}
+        WorkExpViews={WorkExpViews}
+      />
     </>
   );
 }

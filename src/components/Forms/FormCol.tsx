@@ -5,7 +5,7 @@ type FormColType = {
 };
 function FormCol({ children, isFormActive }: FormColType) {
   return (
-    <div className={`form-col flex flex-col ${isFormActive ? "w-8/12" : "w-0"}`}>
+    <div className={`form-col flex flex-col ${isFormActive ? "w-full md:w-1/2" : "w-0"}`}>
       {children}
     </div>
   );

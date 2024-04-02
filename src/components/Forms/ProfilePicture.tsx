@@ -25,10 +25,13 @@ export function PictureInput({ setImage }) {
     </>
   );
 }
-export function PictureImage({ image }) {
+export function PictureImage({ image, printSize }) {
   const [view, setView] = useState([]);
 
   useEffect(() => {
+    if (image == null) {
+      setView([]);
+    }
     if (image) {
       const objectUrl = URL.createObjectURL(image);
       setView([objectUrl]);
@@ -50,7 +53,7 @@ export function PictureImage({ image }) {
           key={index}
           src={pic}
           alt={`Uploaded pic ${index}`}
-          className="flex items-center justify-center m-2"
+          className="flex items-center justify-center m-2 w-[175px] h-[175px]"
         />
       ))}
     </>

@@ -1,7 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@media print {
+  @page {
+    size: 170mm 239mm;
+  }
+}
 @layer components {
   .transition-height-1s {
     transition: height 1s ease;
@@ -9,10 +13,12 @@
   .transition-width-1s {
     transition: width 1s ease;
   }
+  .text-2xs {
+    font-size: 0.5rem;
+    line-height: 0.75rem;
+  }
 }
 #pictureImg {
-  width: 195px;
-  height: 195px;
   max-width: 100%;
   max-height: 100%;
   border-radius: 50%;
@@ -22,10 +28,6 @@
   display: none;
 }
 .CV {
-  max-height: 600px;
-  min-height: 600px;
-  min-width: 420px;
-  max-width: 422px;
   overflow-y: auto;
 }
 
@@ -42,16 +44,10 @@
 }
 
 .menu {
-  @apply overflow-hidden transition-width-1s md:transition-height-1s;
+  @apply overflow-hidden transition-width-1s lg:transition-height-1s;
 }
 .show-menu {
-  @apply w-80 md:h-80 md:w-20;
-}
-
-.max-width-prose {
-  max-width: 360px;
-  width: 100%;
-  overflow-wrap: break-word;
+  @apply w-[25rem] lg:h-[25rem] lg:w-20;
 }
 
 .form-icon {

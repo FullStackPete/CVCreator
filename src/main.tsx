@@ -5,7 +5,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <div className="flex flex-col md:flex-row">
+    <div className="flex flex-col lg:flex-row m-2">
       <Menu />
     </div>
   </React.StrictMode>

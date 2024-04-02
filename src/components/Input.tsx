@@ -6,8 +6,8 @@ type InputProps = {
   name: string;
   onInputChange: (arg1: string, arg2: string) => void;
   isTextArea?: boolean;
-  value: string;
-  isEditing: boolean;
+  value?: string;
+  isEditing?: boolean;
 };
 
 function Input({
