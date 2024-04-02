@@ -1,56 +1,52 @@
-import { BasicForm, SchoolForm, WorkForm } from "./Forms";
-import { FormCol, Icon, ExpContainer } from "./SComponents";
-import { PictureImage, PictureInput } from "./Profile";
 import { useState } from "react";
+import ExpContainer from "./components/ExpContainer";
+import BasicForm from "./components/Forms/BasicForm";
+import FormCol from "./components/Forms/FormCol";
+import SchoolForm from "./components/Forms/SchoolForm";
+import WorkForm from "./components/Forms/WorkForm";
+import Icon from "./components/Icon";
+import { PictureInput, PictureImage } from "./components/Forms/ProfilePicture";
 
-let SchoolExpID = 0;
-let WorkExpID = 0;
+type SchoolExpType = {
+  id: number;
+  uniname: string;
+  major: string;
+  studyYears: string;
+};
+type WorkExpType = {
+  id: number;
+  company: string;
+  position: string;
+  workYears: string;
+};
+
+let SchoolExpId: number = 0;
+let WorkExpId: number = 0;
 
 function Menu() {
   const [isEditing, setIsEditing] = useState(false);
+  const [btnState, setBtnState] = useState(0);
+  const [image, setImage] = useState(null);
   const [schoolExp, setSchoolExp] = useState([]);
   const [workExp, setWorkExp] = useState([]);
-  const [btnState, setBtnState] = useState(null);
-
+  const [showDeleteOutput, setShowDeleteOutput] = useState(false);
   const [output, setOutput] = useState({
     name: "",
     lastname: "",
     desiredpos: "",
-    about: null,
+    about: "",
     uniname: "",
     major: "",
+    phone: "",
+    email: "",
     studyYears: "",
     company: "",
     position: "",
     workYears: "",
-    email: null,
-    phone: null,
   });
-  const [menuIsOpen, setMenuIsOpen] = useState(true);
-  const [activeForm, setActiveForm] = useState("BasicForm");
-  const [image, setImage] = useState(null);
-  const [showDeleteOutput, setShowDeleteOutput] = useState(false);
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [activeForm, setActiveForm] = useState<string | null>(null);
 
-  const handleOutputDelete = () => {
-    
-    setOutput({
-      name: "",
-    lastname: "",
-    desiredpos: "",
-    about: null,
-    uniname: "",
-    major: "",
-    studyYears: "",
-    company: "",
-    position: "",
-    workYears: "",
-    email: null,
-    phone: null,
-    });
-    setWorkExp([]);
-    setSchoolExp([]);
-    setShowDeleteOutput(false);
-  };
   const loadExampleData = () => {
     setShowDeleteOutput(true);
     setOutput({
@@ -127,7 +123,12 @@ function Menu() {
     }
   };
   const handleFormAddClick = () => {
-    if (activeForm == "SchoolForm" && output.uniname!= "" && output.major!= "" && output.studyYears!= "") {
+    if (
+      activeForm == "SchoolForm" &&
+      output.uniname != "" &&
+      output.major != "" &&
+      output.studyYears != ""
+    ) {
       SchoolExpID++;
       setSchoolExp((prevSchoolExp) => [
         ...prevSchoolExp,
@@ -139,7 +140,12 @@ function Menu() {
         },
       ]);
       setBtnState((prevBtnState) => prevBtnState + 1);
-    } else if (activeForm == "WorkForm"&& output.company!= "" && output.position!= "" && output.workYears!= "") {
+    } else if (
+      activeForm == "WorkForm" &&
+      output.company != "" &&
+      output.position != "" &&
+      output.workYears != ""
+    ) {
       WorkExpID++;
       setWorkExp((prevWorkExp) => [
         ...prevWorkExp,
@@ -222,19 +228,18 @@ function Menu() {
       </div>
     </div>
   ));
-
   return (
     <>
       <div
         id="menu"
-        className={`bg-slate-300 rounded text-5xl m-4 items-center justify-center text-center transform-origin transition-all w-20
+        className={`flex md:flex-col flex-row  bg-slate-300 rounded m-4 items-center text-center transform-origin transform-origin transition-all h-20 w-20 
         menu ${menuIsOpen ? "show-menu" : ""}
         `}
       >
         <button onClick={handleMenuClick}>
           <span
             id="menuIcon"
-            className={`material-symbols-outlined text-gray-800 text-5xl cursor-pointer my-4 menuIcon ${
+            className={`material-symbols-outlined text-gray-800 text-5xl cursor-pointer m-4 menuIcon ${
               menuIsOpen ? "open" : ""
             }`}
           >
@@ -258,7 +263,6 @@ function Menu() {
           isActive={activeForm === "WorkForm"}
         ></Icon>
       </div>
-
       <FormCol isFormActive={activeForm}>
         {activeForm === "BasicForm" && (
           <>
@@ -266,15 +270,14 @@ function Menu() {
             <PictureInput setImage={setImage} />
 
             <button onClick={loadExampleData}>Load example data</button>
-            {showDeleteOutput &&
-            <Icon
-              icon="delete"
-              title="Delete example data"
-              clickHandler={() => handleOutputDelete()}
-            ></Icon>
-            }
+            {showDeleteOutput && (
+              <Icon
+                icon="delete"
+                title="Delete example data"
+                clickHandler={() => handleOutputDelete()}
+              ></Icon>
+            )}
           </>
-
         )}
         {activeForm === "SchoolForm" && (
           <>
@@ -300,8 +303,8 @@ function Menu() {
         )}
       </FormCol>
 
-      <div className="CV flex flex-row m-4 shadow-black shadow-lg text-white">
-        <div className="left-bar justify-center  bg-gray-800 flex-col h-big w-48">
+      <div className="CV flex flex-row m-2 h-big shadow-black shadow-lg text-white">
+        <div className="left-bar bg-gray-800 flex-col min-w-[8rem]">
           <PictureImage image={image} />
 
           {schoolExp.length > 0 && (
@@ -329,10 +332,9 @@ function Menu() {
             <div className="ml-12">{output.email}</div>
           </div>
         </div>
-
-        <div className="flex-col ">
+        <div className="flex-col w-full">
           <div className="h-10"></div>
-          <div className="bg-yellow-400 right-bar h-28 text-black tracking-widest leading-3 max-h-32">
+          <div className="bg-yellow-400  w-full h-28 text-black tracking-widest leading-3 max-h-32">
             <div className="bg-yellow-400 h-2"></div>
             <p className="ml-6 mt-4 text-3xl">
               <span className="font-bold">{output.name}</span> {output.lastname}

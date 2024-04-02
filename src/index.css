@@ -2,19 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-#pictureImg{
+@layer components {
+  .transition-height-1s {
+    transition: height 1s ease;
+  }
+  .transition-width-1s {
+    transition: width 1s ease;
+  }
+}
+#pictureImg {
   width: 195px;
   height: 195px;
-  max-width: 100%; /* Zapewnia, że obraz nie wyjdzie poza szerokość kontenera */
-  max-height: 100%; /* Zapewnia, że obraz nie wyjdzie poza wysokość kontenera */
-  border-radius: 50%; /* Ustawienie na 50% powoduje, że obraz ma kształt kółka */
-  object-fit: cover; /* Zapewnia, że obraz wypełni całe kółko */
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
 }
-#profilepic-input{
-  display:none;
+#profilepic-input {
+  display: none;
 }
 .CV {
-  max-height: 800px;
+  max-height: 600px;
+  min-height: 600px;
+  min-width: 420px;
+  max-width: 422px;
   overflow-y: auto;
 }
 
@@ -31,23 +42,18 @@
 }
 
 .menu {
-  height: 5rem;
-  overflow: hidden;
-  transform: translateY(0);
-  transition: height 1s ease;
+  @apply overflow-hidden transition-width-1s md:transition-height-1s;
 }
 .show-menu {
-  height: 20rem;
+  @apply w-80 md:h-80 md:w-20;
 }
-.h-big {
-  height: 800px;
-  max-height: 800px;
-}
+
 .max-width-prose {
-  max-width: 333px;
+  max-width: 360px;
   width: 100%;
   overflow-wrap: break-word;
 }
+
 .form-icon {
   transition: transform 0.3s ease;
 }
@@ -58,12 +64,4 @@
 .form-col {
   overflow: hidden;
   transition: width 0.5s ease;
-}
-.left-bar {
-  max-width: 210px;
-  width: 210px;
-}
-.right-bar {
-  max-width: 357px;
-  width: 357px;
 }
