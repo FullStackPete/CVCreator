@@ -1,7 +1,8 @@
 import Icon from "../Icon";
 import Form from "./Form";
-import { useReactToPrint } from "react-to-print";
 import { PictureInput } from "./ProfilePicture";
+import { UtilitiesFormType } from "../../types";
+
 
 function UtilitiesForm({
   showDeleteOutput,
@@ -9,7 +10,7 @@ function UtilitiesForm({
   loadExampleData,
   setImage,
   downloadCV,
-}) {
+}:UtilitiesFormType) {
   return (
     <Form>
       <PictureInput setImage={setImage} />

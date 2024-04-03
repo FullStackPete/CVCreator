@@ -1,7 +1,10 @@
-import { useState, useEffect } from "react";
-export function PictureInput({ setImage }) {
-  const handlePicChange = (event) => {
-    setImage(event.target.files[0]);
+import { useState, useEffect, ChangeEvent } from "react";
+type PictureInputType = {
+  setImage: React.Dispatch<React.SetStateAction<File | null>>;
+};
+export function PictureInput({ setImage }: PictureInputType) {
+  const handlePicChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.target.files && setImage!(e.target.files[0]);
   };
   return (
     <>
@@ -15,7 +18,7 @@ export function PictureInput({ setImage }) {
           Upload your picture
         </label>
         <input
-          onChange={handlePicChange}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => handlePicChange(e)}
           type="file"
           name="profilepic-input"
           id="profilepic-input"
@@ -25,8 +28,11 @@ export function PictureInput({ setImage }) {
     </>
   );
 }
-export function PictureImage({ image, printSize }) {
-  const [view, setView] = useState([]);
+type imagePropType = {
+  image: Blob;
+};
+export function PictureImage({ image }: imagePropType) {
+  const [view, setView] = useState<string[]>([]);
 
   useEffect(() => {
     if (image == null) {

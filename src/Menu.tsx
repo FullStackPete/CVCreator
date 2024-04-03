@@ -5,23 +5,11 @@ import FormCol from "./components/Forms/FormCol";
 import SchoolForm from "./components/Forms/SchoolForm";
 import WorkForm from "./components/Forms/WorkForm";
 import Icon from "./components/Icon";
-import { PictureInput, PictureImage } from "./components/Forms/ProfilePicture";
 import UtilitiesForm from "./components/Forms/UtilitiesForm";
 import CV from "./components/CV/CV";
 import { useReactToPrint } from "react-to-print";
-
-type SchoolExpType = {
-  id: number;
-  uniname: string;
-  major: string;
-  studyYears: string;
-};
-type WorkExpType = {
-  id: number;
-  company: string;
-  position: string;
-  workYears: string;
-};
+import { exampleData } from "./constants";
+import { formType, schoolExpType, setImageType, workExpType } from "./types";
 
 let SchoolExpId: number = 0;
 let WorkExpId: number = 0;
@@ -29,11 +17,11 @@ let WorkExpId: number = 0;
 function Menu() {
   const [isEditing, setIsEditing] = useState(false);
   const [btnState, setBtnState] = useState(0);
-  const [image, setImage] = useState(null);
-  const [schoolExp, setSchoolExp] = useState([]);
-  const [workExp, setWorkExp] = useState([]);
+  const [image, setImage] = useState<File | null>(null);
+  const [schoolExp, setSchoolExp] = useState<schoolExpType[]>([]);
+  const [workExp, setWorkExp] = useState<workExpType[]>([]);
   const [showDeleteOutput, setShowDeleteOutput] = useState(false);
-  const CVComponent = useRef();
+  const CVComponent = useRef(null);
   const [output, setOutput] = useState({
     name: "",
     lastname: "",
@@ -49,7 +37,7 @@ function Menu() {
     workYears: "",
   });
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [activeForm, setActiveForm] = useState<string | null>(null);
+  const [activeForm, setActiveForm] = useState<formType>(null);
 
   const handleOutputDelete = () => {
     setOutput({
@@ -74,21 +62,7 @@ function Menu() {
 
   const loadExampleData = () => {
     setShowDeleteOutput(true);
-    setOutput({
-      name: "John",
-      lastname: "Doe",
-      desiredpos: "Full-stack web developer",
-      about:
-        "Hi! I am a junior full-stack web developer mainly working in NodeJS and React. Lately I also decided to learn C# and I found it very pleasant. My github profile is github.com/FullStackPete - please visit to see my other projects!",
-      phone: "+48 987654321",
-      email: "example@mail.com",
-      uniname: "",
-      major: "",
-      position: "",
-      company: "",
-      workYears: "",
-      studyYears: "",
-    });
+    setOutput(exampleData);
     SchoolExpId++;
     setSchoolExp((prevSchoolExp) => [
       ...prevSchoolExp,
@@ -111,17 +85,18 @@ function Menu() {
     ]);
   };
 
-  const handleExpEdit = (id) => {
+  const handleExpEdit = (id: number) => {
     if (activeForm === "SchoolForm") {
       setIsEditing(true);
       const editedSchoolExp = schoolExp.find((exp) => exp.id === id);
-
-      setOutput((prevOutput) => ({
-        ...prevOutput,
-        studyYears: editedSchoolExp.studyYears,
-        uniname: editedSchoolExp.uniname,
-        major: editedSchoolExp.major,
-      }));
+      if (editedSchoolExp) {
+        setOutput((prevOutput) => ({
+          ...prevOutput,
+          studyYears: editedSchoolExp.studyYears,
+          uniname: editedSchoolExp.uniname,
+          major: editedSchoolExp.major,
+        }));
+      }
       const updatedSchoolExp = schoolExp.filter((exp) => exp.id !== id);
       setSchoolExp(updatedSchoolExp);
       setBtnState((prevBtnState) => prevBtnState + 1);
@@ -129,12 +104,14 @@ function Menu() {
       setIsEditing(true); // only
       const editedWorkExp = workExp.find((exp) => exp.id === id);
 
-      setOutput((prevOutput) => ({
-        ...prevOutput,
-        workYears: editedWorkExp.workYears,
-        company: editedWorkExp.company,
-        position: editedWorkExp.position,
-      }));
+      if (editedWorkExp) {
+        setOutput((prevOutput) => ({
+          ...prevOutput,
+          workYears: editedWorkExp.workYears,
+          company: editedWorkExp.company,
+          position: editedWorkExp.position,
+        }));
+      }
 
       const updatedWorkExp = workExp.filter((exp) => exp.id !== id);
       setWorkExp(updatedWorkExp);
@@ -142,7 +119,7 @@ function Menu() {
     }
   };
 
-  const handleExpDelete = (id) => {
+  const handleExpDelete = (id: number) => {
     if (activeForm == "SchoolForm") {
       const updatedSchoolExp = schoolExp.filter((exp) => exp.id !== id);
       setSchoolExp(updatedSchoolExp);
@@ -191,7 +168,7 @@ function Menu() {
     }
   };
 
-  const handleInputChange = (value, name) => {
+  const handleInputChange = (value: string, name: string) => {
     setOutput((prevOutput) => ({
       ...prevOutput,
       [name]: value,
@@ -202,10 +179,12 @@ function Menu() {
     setMenuIsOpen(!menuIsOpen);
   };
 
-  const handleFormToggle = (form) => {
+  const handleFormToggle = (form: formType) => {
     setActiveForm((prevForm) => (prevForm === form ? null : form));
   };
-  const handlePrint = useReactToPrint({ content: () => CVComponent.current });
+  const handlePrint = useReactToPrint({
+    content: () => CVComponent.current || null,
+  });
 
   const WorkExpViews = workExp.map((exp) => (
     <div

@@ -1,5 +1,16 @@
+import { ReactNode } from "react";
+import { resumeType, schoolExpType, workExpType } from "../../types";
 import { PictureImage } from "../Forms/ProfilePicture";
 
+export type CVType = {
+  schoolExp: schoolExpType[];
+  image: File | null;
+  SchoolExpViews: ReactNode;
+  output: resumeType;
+  workExp: workExpType[];
+  WorkExpViews: ReactNode;
+  reference: React.MutableRefObject<HTMLDivElement | null>;
+};
 function CV({
   schoolExp,
   image,
@@ -8,14 +19,14 @@ function CV({
   workExp,
   WorkExpViews,
   reference,
-}) {
+}: CVType) {
   return (
     <div
       ref={reference}
-      className="CV flex flex-row shadow-black shadow-lg text-white min-w-[640px] max-w-[640px] min-h-[900px] max-h-[900px];"
+      className="CV flex flex-row shadow-black shadow-lg text-white min-w-[640px] max-w-[640px] min-h-[900px] max-h-[900px] lg:mx-2"
     >
       <div className="left-bar bg-gray-800 flex-col max-w-[30%] min-w-[30%]">
-        <PictureImage image={image} />
+        {image && <PictureImage image={image} />}
 
         {schoolExp.length > 0 && (
           <p className="my-6 text-center tracking-widest border-b-2">
